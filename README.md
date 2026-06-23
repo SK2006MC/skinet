@@ -59,9 +59,10 @@ To avoid the $O(n^3)$ cost of a pseudo‑inverse, the network maintains a **Mirr
 
 1. **Target Input**: The layer above provides a required input $x^*_{l+1}$.
 2. **Mirror Map**: The current layer finds the required activation:
-   $$a^*_l = V_{l+1} \cdot x^*_{l+1}$$
+$$a^*_l = V_{l+1} \cdot x^*_{l+1}$$
+
 3. **Invert Expression**: The neuron determines what its input should have been to produce that activation:
-   $$x^*_l = b_l - \frac{\max(0, a^*_l)}{b_l}$$
+$$x^*_l = b_l - \frac{\max(0, a^*_l)}{b_l}$$
 
 ### 3. The Learning Rule (Local Reconciliation)
 
