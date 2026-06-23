@@ -4,7 +4,7 @@ Intelligence is the process of using error to refine compression.
 
 [![Status](https://img.shields.io/badge/status-experimental-red)](https://github.com/SK2006MC/skinet)
 
-Relativity Network is an experimental neural architecture that replaces global optimisation (gradient descent / backpropagation) with local state reconciliation. It treats learning not as a search through weight space, but as a process of building an ever-sharper internal model of the environment.
+Relativity Network is an experimental neural architecture that replaces global optimisation (gradient descent / backpropagation) with local state reconciliation. It treats learning not as a search through weight-space driven by a distant loss function, but as a process of local state reconciliation—each neuron constantly comparing what it observes with what it remembers, and updating shared weights to resolve the discrepancy.
 
 In this architecture, activity is the cost of surprise. Learning is the process of turning that activity into memory, eventually leading to a state of Global Silence.
 
@@ -35,7 +35,7 @@ Conventional neural networks are teleological — they are driven by a distant g
 
 ### 1. The Neuron Model (Depletion‑Mode)
 
-Inspired by depletion‑mode transistors, the Relativity neuron is normally ON. It possesses an intrinsic tendency to fire based on its memory $b$. Incoming evidence $x$ does not create activity — it *suppresses* it.
+Inspired by depletion‑mode transistors, the Relativity neuron is normally ON. It possesses an intrinsic tendency to fire based on its memory $b$. Incoming evidence $x$ does not create activity—it *suppresses* it. When the observed input matches memory, the neuron is silent. When the input is *below* expectation (rare), the neuron fires to signal surprise.
 
 **Forward Pass (Observation):**
 
@@ -51,7 +51,7 @@ The factor $b$ outside the ReLU scales the surprise signal with the memory itsel
 
 ### 2. The Backward Pass (Reconstruction)
 
-Instead of propagating an error gradient, the network performs **State Reconstruction**. It treats a desired output as a boundary condition and reconstructs a compatible internal state layer-by-layer, from output back to input.
+Instead of propagating an error gradient, the network performs **State Reconstruction**. It treats a desired output as a boundary condition and reconstructs a compatible internal state layer-by-layer, working backward through the network.
 
 To avoid the $O(n^3)$ cost of a pseudo‑inverse, the network maintains a **Mirrored Reciprocal Matrix** $V$ that evolves alongside the weight matrix $W$ and approximates $W^+$.
 
@@ -60,7 +60,7 @@ To avoid the $O(n^3)$ cost of a pseudo‑inverse, the network maintains a **Mirr
 1. **Target Input**: The layer above provides a required input $x^*_{l+1}$.
 2. **Mirror Map**: The current layer finds the required activation:
    $$a^*_l = V_{l+1} \cdot x^*_{l+1}$$
-4. **Invert Expression**: The neuron determines what its input should have been to produce that activation:
+3. **Invert Expression**: The neuron determines what its input should have been to produce that activation:
    $$x^*_l = b_l - \frac{\max(0, a^*_l)}{b_l}$$
 
 ### 3. The Learning Rule (Local Reconciliation)
@@ -129,7 +129,7 @@ This ensures the "gain" of each neuron is tuned to the scale of its inputs, prev
 
 ## Open Questions & Roadmap
 
-- **Readout Mechanism** – How to extract decisions from a network that converges to silence? Possible answer: silence on a familiar sample is the classification, or a separate decoding layer driven by a reward signal.
+- **Readout Mechanism** – How to extract decisions from a network that converges to silence? Possible answer: silence on a familiar sample is the classification, or a separate decoding layer driven by unexplained variance.
 
 - **Stability Analysis** – Tracking the condition number of $VW$ under continuous multiplicative updates, especially with batch‑to‑batch variance.
 
@@ -145,6 +145,6 @@ This ensures the "gain" of each neuron is tuned to the scale of its inputs, prev
 
 ## Summary
 
-The Relativity Network is not an optimizer; it is an equilibrator. It posits that intelligence is not the ability to find a correct answer, but the ability to build an internal model so accurate that the need to search vanishes.
+The Relativity Network is not an optimizer; it is an equilibrator. It posits that intelligence is not the ability to find a correct answer, but the ability to build an internal model so accurate that surprise approaches zero.
 
 Learning is the path to silence.
