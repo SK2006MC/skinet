@@ -3,7 +3,6 @@
 Intelligence is the process of using error to refine compression.
 
 [![Status](https://img.shields.io/badge/status-experimental-red)](https://github.com/SK2006MC/skinet)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 Relativity Network is an experimental neural architecture that replaces global optimisation (gradient descent / backpropagation) with local state reconciliation. It treats learning not as a search through weight space, but as a process of building an ever-sharper internal model of the environment.
 
@@ -60,9 +59,13 @@ To avoid the $O(n^3)$ cost of a pseudo‑inverse, the network maintains a **Mirr
 
 1. **Target Input**: The layer above provides a required input $x^*_{l+1}$.
 2. **Mirror Map**: The current layer finds the required activation:
-   $$a^*_l = V_{l+1} \cdot x^*_{l+1}$$
-3. **Invert Expression**: The neuron determines what its input should have been to produce that activation:
-   $$x^*_l = b_l - \frac{\max(0, a^*_l)}{b_l}$$
+   $$
+   a^*_l = V_{l+1} \cdot x^*_{l+1}
+   $$
+4. **Invert Expression**: The neuron determines what its input should have been to produce that activation:
+   $$
+   x^*_l = b_l - \frac{\max(0, a^*_l)}{b_l}
+   $$
 
 ### 3. The Learning Rule (Local Reconciliation)
 
